@@ -66,7 +66,9 @@ while True:
     if message:
         id = message[0]['id']
         number = message[0]['number']
-        received = str(datetime.strptime(message[0]['date'], '%y,%m,%d,%H,%M,%S,+12'))
+        datesplit = message[0]['date'].split(',')
+        datesplit[6] = str('{:+}'.format(int(int(datesplit[6]) * 0.25 * 100)).zfill(5))
+        received = str(datetime.strptime(','.join(datesplit), '%y,%m,%d,%H,%M,%S,%z'))
         content = bytes.fromhex(str(message[0]['content']).replace("00", "")).decode('latin-1')
 
         print()
